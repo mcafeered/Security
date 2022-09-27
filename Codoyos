@@ -1,11 +1,20 @@
 Website Scraper 
 
-pip install lxml requests (installing the module)
-Script
-#!/usr/bin/python
+#!/usr/bin/python3
+
+## IMPORTS ##
 import lxml.html
 import requests
+
+## Grabs Webpage ##
 page = requests.get('http://quotes.toscrape.com')
 tree = lxml.html.fromstring(page.content)
+
+## Outlines Tags You Want to Grab ##
+# Change//small[..] to whatever tag you want. Leave /text() #
 authors = tree.xpath('//small[@class="author"]/text()')
+
+## Print (duh) ##
 print ('Authors: ',authors)
+
+Dont use Python3, use python2
