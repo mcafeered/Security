@@ -7,7 +7,7 @@ import lxml.html
 import requests
 
 ## Grabs Webpage ##
-page = requests.get('http://quotes.toscrape.com')
+page = requests.get('http://quotes.toscrape.com') (this is the website to change)
 tree = lxml.html.fromstring(page.content)
 
 ## Outlines Tags You Want to Grab ##
@@ -18,3 +18,36 @@ authors = tree.xpath('//small[@class="author"]/text()')
 print ('Authors: ',authors)
 
 Dont use Python3, use python2
+
+frontend = the website you can access normally - backend = the server the website is stored on
+can use 0.0.0.0 to reference yourself and any tunnels you have setup to websites
+
+Example scan 
+nmap -Pn -T4 10.50.37.95 -p 22,80,8080,8888,2222,4444
+(use nmap only for single targets)
+
+after getting ports banner grab using netcat
+nc 10.50.37.95 22
+
+Ping sweep example
+for i in {1..254}; do (ping -c 1 192.168.1.$i | grep "bytes from" &); done 
+(run this as close to the network you are trying to scan as possible, also dont scan the grey host network)
+
+can use (previous nmap scan) --script=banner.nse which automatically banner grabs ports that nmap finds
+can use (previous nmap scan) --script=http-enum.nse used for websites to enumerate well known paths
+can use (previous nmap scan) --script=smb-os-dicovery.nse (for windows machines)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
