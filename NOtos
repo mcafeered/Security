@@ -85,6 +85,7 @@ nmap --script-args-file <filename>
 nmap --script-help <filename>|<category>|<directory>
 nmap --script-trace
 
+========================== Web Exploitation Day 1 (XSS) ====================================
 Server/Client Relationship
 Synchronous communications between user and services
 Not all data is not returned, client only receives what is allowed
@@ -212,7 +213,7 @@ system("ping -c 1 ".$_GET["ip"]);
 Run the following to chain/stack our arbitrary command
 ; cat /etc/passwd
 
-
+when using firefox use F12 to bring up developer tools then check the inspector and network tabs
 
 
 
