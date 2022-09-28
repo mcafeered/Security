@@ -33,9 +33,9 @@ Ping sweep example
 for i in {1..254}; do (ping -c 1 192.168.1.$i | grep "bytes from" &); done 
 (run this as close to the network you are trying to scan as possible, also dont scan the grey host network)
 
-can use (previous nmap scan) --script=banner.nse which automatically banner grabs ports that nmap finds
-can use (previous nmap scan) --script=http-enum.nse used for websites to enumerate well known paths
-can use (previous nmap scan) --script=smb-os-dicovery.nse (for windows machines)
+can use (previous nmap scan) --script banner.nse which automatically banner grabs ports that nmap finds
+can use (previous nmap scan) --script http-enum.nse used for websites to enumerate well known paths
+can use (previous nmap scan) --script smb-os-dicovery.nse (for windows machines)
 
 
 
