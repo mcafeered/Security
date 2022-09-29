@@ -91,6 +91,7 @@ find total # of columns (UNION 1,2,3....(test a lot to make sure you get the exa
 GOLDEN STATEMENT, UNION SELECT table_schema, table_name, column_name, (plus placeholders if needed)(can change order to fit funky tables) from information_schema.columns (find useful fields to use in your custom table statement)
 Make new query based on custom tables+columns UNION SELECT <Values you found important> from CustomTable.CustomColumn;# 
 
+*Get version information using @@version*
 
 
 
