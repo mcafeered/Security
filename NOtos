@@ -182,7 +182,7 @@ Only requires user to visit page
 
 Useful JavaScript Components
 Proof of concept (simple alert):
-<script>alert('XSS');</script>
+<script>alert('XSS');</script> (TRY SINGLE AND DOUBLE QUOTES UNTIL IT BREAKS)
 Capturing Cookies
 document.cookie
 Capturing Keystrokes
