@@ -215,18 +215,111 @@ Run the following to chain/stack our arbitrary command
 
 when using firefox use F12 to bring up developer tools then check the inspector and network tabs
 
+================================== SQL =====================================
+
+SQL
+S tructured Q uery L anguage - ANSI Standard
+Additional commands added by vendors
+Relational
+
+Standard Commands --------------------------------------------------------------------
+SELECT
+Extracts data from a database
+
+UNION
+Used to COMBINE the result-set of TWO OR MORE SELECT STATEMENTS
+
+USE
+Selects the DB to use
+
+UPDATE
+Updates data in a database
+
+DELETE
+Deletes data from a database
+
+INSERT INTO
+Inserts new data into a database
+
+CREATE DATABASE
+Creates a new database
+
+ALTER DATABASE
+Modifies a database
+
+CREATE TABLE
+Creates a new table
+
+ALTER TABLE
+Modifies a table
+
+DROP TABLE
+Deletes a table
+
+CREATE INDEX
+Creates an index (search key)
+
+DROP INDEX
+Deletes an index
+
+----------------------------------------------------------------------------
+
+SQL Injection - Considerations
+Requires Valid SQL Queries
+Fully patched systems can be vulnerable due to misconfiguration
+Input Field Sanitization
+String vs Integer Values
+Is INFORMATION_SCHEMA Database available?
+GET Request versus POST Request HTTP methods
+
+Unsanitized vs Sanitized Fields ----------------------------------------------
+Unsanitized: input fields can be found using a Single Quote ⇒ '
+Will return extraneous information
+' closes a variable, to allow for additional statements/clauses
+May show no errors or generic error (harder Injection)
+
+Sanitized: input fields are checked for items that might harm the database (Items are removed, escaped, or turned into a single string)
+
+Validation: checks inputs to ensure it meets a criteria (String doesn’t contain ')
+
+-----------------------------------------------------------------------------
+
+Server-Side Query Processing
+User enters JOHNDOE243 in the name form field and PASS1234$ in the pass form field.
+The Server-Side Query that would be passed to MySQL from PHP would be:
+BEFORE INPUT:
+SELECT id FROM users WHERE name=‘$name’ AND pass=‘$pass’;
+AFTER INPUT:
+SELECT id FROM users WHERE name=‘JohnDoe243’ AND pass=‘pass1234’;
+
+Example - Injecting Your Statement
+User enters TOM' OR 1='1 in the name and pass fields.
+Truth Statement: tom ' OR 1='1
+Server-Side query executed would appear like this:
+SELECT id FROM users WHERE name=‘tom' OR 1='1’ AND pass=‘tom' OR 1='1’
+(By default there are '' at the beginning and end of the WHERE statement values given, this is random which means you havt to phanangle it)
+find a vulnerable field where you can enter information and then use the sql injection to get the database 
+to find a vulnerable field insert USER ' OR 1='1 (might have to mess around with the quotes for best results)
+POST methods mean you are entering information (try multiple fields (exploiting lazy programmer))
 
 
+GET methods have you use the URL bar to see the variable you use to add 1=1 where after you find the vulnerability use <pretext> UNION select 1,2,3 to see the columns and what numbers they are
+<pretext> UNION select table_schema, table_name, column_name from information_schema.columns (since you're breaking the datbases you can only work with the amount of columns you have, meaning you would have to add placeholders if there is more than 3)
 
+Stacking Statements
+Chaining multiple statements together using a semi-colon ;
+SELECT * FROM user WHERE id=‘Johnny'; DROP TABLE Customers; --’
 
+Nesting statements
+Some Web Application + SQL Database combinations do not allow stacking, such as PHP and MySQL.
+Though they may allow for nesting a statement within an existing one:
+php?key=<value> UNION SELECT 1,column_name,3 from information_schema.columns where table_name = 'members'
 
-
-
-
-
-
-
-
-
-
-
+Ignore the rest
+Using # or -- tells the Database to ignore everything after
+Server-Side Query:
+SELECT product FROM item WHERE id = $select limit 1;
+Input to Inject:
+1 OR 1=1; #
+Server-Side Query becomes:
+SELECT product FROM item WHERE id = 1 or 1=1; # limit 1;
