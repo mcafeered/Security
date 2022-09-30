@@ -93,5 +93,28 @@ Make new query based on custom tables+columns UNION SELECT <Values you found imp
 
 *Get version information using @@version*
 
+REVERSE ENGINEERING DEMO
+
+IDA
+Make sure to double check using ida and ghidra (but run it first)
+make note of what it does when it runs to look for in ida
+in Ida use view to search for strings view-open_subviews-strings
+click on the string window to allow you to use CTRL+f to find your string then double-click on it to see where in the assembly code it is stored
+we want success with the malware so we find success and double-click on the sub-whatver to go to it and begin reverse engineering through the code
+red and green arrows mean what happens based on a compare statement and the JZ or JNZ
+press h on hexadecimal text to convert it to decimal
+move up line by line looking for the variable you found but stopping to check call functions and read their subkey
+GENERALLY in IDA with ebp+<any variable> it is user input that is needed 
+
+GHIDRA
+create a new project to check new programs and then import said file to check it'
+click yes on analyze file then just immediately hit analyze without changing anything
+once again look for any strings you can remember by going to search and then for strings and changing the filter box
+double click on what you found and then minimize the window you are on to begin reverse engineering
+click on the FUN associated with the string you found after searching to get psudeocode
+you can right click on hex to change it to decimal
+can also right click on variables to rename them
+param_1 is usually user input
+
 
 
