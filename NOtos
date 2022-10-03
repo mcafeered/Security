@@ -425,7 +425,7 @@ Execute Patched Binary
 
 ASSEMBLY READS RIGHT TO LEFT
 
-
+Quick example: 'a', 'A', 'A', 1) # is used in a vulnerable username port to give it admin privileges
 
 
 
