@@ -146,6 +146,7 @@ JavaScript (JS)
 Allows websites to interact with the client
 JavaScript runs on the client’s machine
 Coded as .JS files, or in-line of HTML
+can run javascript commands by pulling up developer tools and using console
 
 JS Interaction
 <script>
