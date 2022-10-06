@@ -263,6 +263,42 @@ msfconsole then use multi/handler and set the payload to what you set on msfveno
 
 or use msfvenom -p windows/shell_bind_tcp EXITFUNC=thread -b "\x00" -f c and a nc -v <target> 4444 
 
+=================================== POST EXPLOITATION ==================================
+
+LINUX ENUMERATION
+can run last to see users logged in now and in past, use who to see who's currently logged on, whoami to see who you are, groups to see what groups you have
+can run id to see the uid and gid of the user who ran it
+ps -elf or ps auxf or pstree for processes, sudo lsof for open files, ps -p 1 will show whether system is systemd or sysV
+systemctl list-units --type service (can | grep for specific things) for systemd services, while SysV would be service --status-all
+ifconfig -a will show ip addresses NICs and configuration, netstat shows open connections, arp -an shows stored mac addresses for ip addresses
+ip route, route, or netstat -r shows the routing table
+cat /proc/cpuinfo shows cpu info (no shot), lsmod list Kernel modules
+
+WINDOWS ENUMERATION
+net user or get-localuser shows users on box, get-localgroup shows groups (can use | get-member to see fields you can | select)
+tasklist /v gives running processes or get-process (can pipe to | where { $_.sessionid -eq <number> } to find particular id
+tasklist /svc shows services, net start shows started services, get-service | (optional arguments n' stuff) or wmic service list status
+ipconfig /all shows NICS network configuration and other stuff, netstat -anob shows shows ports protocols binaries
+net view and net use are used for workgroups shares and other such things
+arp -a is the arp cache, route print shows the routing table, systeminfo gives os info and other things
+date shows time and time config relative to that box
+
+
+================================ SSH MULTIPLEXING ========================================
+
+connection based on existence of a file
+make directory in .ssh called cm (control masters) which will hold all connections
+to setup a master connection with many coming off of it using ssh -M -S ~/.ssh/cm/grayBox student@10.50.39.214
+now that the connection is established the file will exist as long as the connection does
+to access your new connection do ssh -S ~/.ssh/cm/grayBox grayhost(name connection whatever in order to connect)
+ssh -M -S ~/.ssh/cm/grayBox -o "ControlPersist=10m" student@10.50.39.214 with the -o means the connection will persist for xminutes even if closed
+to build out further tunnels use ssh -O forward -L1111:10.100.28.48:80 -S ~/.ssh/cm/grayBox nla  where -O specifies that we are port forwarding through the gray host
+to cancel connections ssh -O cancel -L2222:10.100.28.40:80 -S ~/.ssh/cm/grayBox nla where the -O is changed to cancel
+ssh -O cancel ~/.ssh/cm/grayBox another the -O with cancel will attempt to gracefully teardown the master connection where -O exit will abruptly close it
+can create more masters by using -M -S <specify a new folder> and -p if getting there through tunnel
+scp -o "ControlPath=~/.ssh/cm/gray" placeholder:/home/student/func. can be used to run scp without even getting on the box
+MAKE SURE TO HAVE A PLACEHOLDER FOR THE USUAL USERNAME@IP
+
 
 
 
