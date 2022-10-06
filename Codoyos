@@ -273,6 +273,7 @@ systemctl list-units --type service (can | grep for specific things) for systemd
 ifconfig -a will show ip addresses NICs and configuration, netstat shows open connections, arp -an shows stored mac addresses for ip addresses
 ip route, route, or netstat -r shows the routing table
 cat /proc/cpuinfo shows cpu info (no shot), lsmod list Kernel modules
+check /etc/hosts
 
 WINDOWS ENUMERATION
 net user or get-localuser shows users on box, get-localgroup shows groups (can use | get-member to see fields you can | select)
