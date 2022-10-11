@@ -731,6 +731,6 @@ cron.!info,!debug
 rsyslog means that remote logs are being sent to another box that is show in the rsyslog file stored in /var/log/(something rsyslog related)
 
 if there is a beacon look for a pattern in tcpdump filtering out noise and then find a way to use netcat  and listen for one of the ports on the loopback (or 0.0.0.0)
-
+remote logging is at bottom of rsyslog (make sure all not commented out)
 
 
