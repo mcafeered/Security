@@ -591,6 +591,10 @@ if a user has a '.' in their $PATH you can replace (can add by doing PATH=.:$PAT
 if you do this you would have to specify the full path of ls now though
 cat /etc/crontab to see whats set to run and then check the further directories like cron.d or cron.hourly (crontab -l to see for particular users) check /var/syslog
 
+example of script to exploit '.' in path being used by someone else 
+#!/bin/bash
+/bin/ls -lisa ~ > heh.txt
+
 Adding or Hijacking a User Account
 Adding vs hijacking a user account
 User account considerations?
