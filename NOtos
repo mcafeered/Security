@@ -733,4 +733,164 @@ rsyslog means that remote logs are being sent to another box that is show in the
 if there is a beacon look for a pattern in tcpdump filtering out noise and then find a way to use netcat  and listen for one of the ports on the loopback (or 0.0.0.0)
 remote logging is at bottom of rsyslog (make sure all not commented out)
 
+================================ Privilege Escalation, Persistence & Covering Your Tracks Windows ==========================
+
+Modes & Levels
+Kernel Mode vs User Mode
+Privileged vs Unprivileged
+
+Windows Access Control Model
+Access Tokens
+Security Identifier (SID) associations and Token associations
+Security Descriptors
+DACL
+SACL
+ACEs
+
+DLL Search Order
+Executables check the following locations (in successive order):
+HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Control\Session Manager\KnownDLLs
+The directory the the Application was run from
+The directory specified in in the C+ function GetSystemDirectory()
+The directory specified in the C+ function GetWindowsDirectory()
+The current directory
+
+Windows Integrity Mechanism
+Integrity Levels
+--UNTRUSTED
+Anonymous SID access tokens
+--LOW
+Everyone SID access token (World)
+--MEDIUM
+Authenticated Users
+--HIGH
+Administrators
+--SYSTEM
+System services (LocalSystem, LocalService, NetworkService)
+
+User Account Control (UAC)
+Always Notify
+Notify me only when programs try to make changes to my computer
+Notify me only when programs try to make changes to my computer (do not dim my desktop)
+Never notify
+
+DEMO: Checking UAC Settings
+reg query HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Policies\System
+
+AutoElevate Executables
+Requested Execution Levels:
+asInvoker
+highestAvailable
+
+Scheduled Tasks & Services
+Items to evaluate include:
+Write Permissions
+Non-Standard Locations
+Unquoted Executable Paths
+Vulnerabilities in Executables
+Permissions to Run As SYSTEM
+
+DEMO: DLL Hijacking
+Identify Vulnerability
+Take advantage of the default search order for DLLS
+NAME_NOT_FOUND present in executable’s system calls
+Validate permissions
+Create and transfer Malicious DLL
+
+Other Vulnerabilities
+Unpatched Kernel Vulnerabilities
+Unpatched Systems
+Unpatched Applications
+
+Persistance
+System changes or binary uploads that provide the adversary continued access to system
+Survives:
+Reboots
+Credential changes
+DHCP IP reassignment
+Etc.
+Considerations include:
+File naming
+File location
+Timestomping
+Port selection
+
+Registry
+HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\
+Run
+RunOnce
+HKEY_CURRENT_USER\Software\Microsoft\Windows\CurrentVersion\
+Run
+RunOnce
+What are the differences?
+Do you need to blend in?
+
+Scheduled Tasks
+Permission Levels Considerations:
+What is your objective?
+Do you need to blend in?
+
+Services
+At Startup
+Perform Multiple Functions
+Typically require Administrative Access
+
+Covering Tracks
+When does planning start?
+Prior? After? Before?
+What will happen if I do X?
+Logs
+Checks
+Where are things?
+Hide
+File locations, names, times
+Know the system!
+
+Considerations
+Artifacts
+Determine which events will create a log
+Event Logs
+Applications, Security, Setup, System
+Blending In
+TimeStomping
+
+System usage
+Where should you run commands from?
+Locally?
+Remote?
+Are system resources a important, and how can we check them?
+wmic
+net
+netstat
+
+Important Microsoft Event IDs
+4624/4625
+Successful/failed login
+4720
+Account created
+4672
+Administrative user logged on
+7045
+Service created
+
+PowerShell Logging
+Windows CLI CMD history is per instance (doskey /history)
+Powershell can be set to log sessions
+2.0 little evidence
+Nothing about what was executed
+3.0 Module logging (EventID 4103)
+4.0 Module logging
+5.0 Can set module, script block (EventID 4104) and transcription
+
+
+
+
+
+
+
+
+
+
+
+
 
