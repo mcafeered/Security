@@ -594,6 +594,7 @@ cat /etc/crontab to see whats set to run and then check the further directories 
 example of script to exploit '.' in path being used by someone else 
 #!/bin/bash
 /bin/ls -lisa ~ > heh.txt
+Can optionally add on to this script by using ; <whatever you want to add>
 
 Adding or Hijacking a User Account
 Adding vs hijacking a user account
