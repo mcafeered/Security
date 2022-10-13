@@ -310,7 +310,7 @@ honestly just use the FG like
 Dont have to do base64 encoding and use scp to move dll on to box
 
 can also check services to find services without descriptions/goofy descriptions that also have system privileges and try to rename the executable for said service
-copy this said executable with a new name and run msfvenom -p windows/exec CMD='cmd.exe /C "whoami" > C:\\Users||DemoAdmin\\Desktop\\whoami.txt' -f exe > 7z_up.exe
+copy this said executable with a new name and run msfvenom -p windows/exec CMD='cmd.exe /C "whoami" > C:\\Users\\DemoAdmin\\Desktop\\whoami.txt' -f exe > 7z_up.exe
 once this is made again just scp it over 
 
 auditpol /get/category can show what is logged
