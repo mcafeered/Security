@@ -316,6 +316,12 @@ once this is made again just scp it over
 auditpol /get/category can show what is logged
 
 
+this helped
+proxychains nmap -Pn -T5 -sT -p 80 --script http-enum.nse <IP>
+
+proxychains nmap -Pn -T5 -sT -p 80 --script http-sql-injection.nse <IP>
+
+proxychains nmap -Pn -T5 -sT -p 80 --script http-robots.txt.nse <IP>
 
 
 
