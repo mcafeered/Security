@@ -323,5 +323,7 @@ proxychains nmap -Pn -T5 -sT -p 80 --script http-sql-injection.nse <IP>
 
 proxychains nmap -Pn -T5 -sT -p 80 --script http-robots.txt.nse <IP>
 
-
+NESTING QUERIES EXAMPLE
+<URL>/uniondemo.php?Selection=2 OR 1=1		<!-- WORKS! -->
+<URL>/uniondemo.php?Selection=2' OR 1='1	<!-- DOESN'T work! -->
 
